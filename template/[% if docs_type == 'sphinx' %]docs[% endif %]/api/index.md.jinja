@@ -1,0 +1,19 @@
+# {{ module_name }} package
+
+```{eval-rst}
+.. automodule:: {{ module_name }}
+   :members:
+   :undoc-members:
+   :show-inheritance:
+```
+[%- if compiled == true %]
+
+## Submodules
+
+```{eval-rst}
+.. automodule:: {{ module_name }}._core
+   :members:
+   :undoc-members:
+   :show-inheritance:
+```
+[%- endif %]

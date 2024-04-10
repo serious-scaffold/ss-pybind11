@@ -1,0 +1,231 @@
+_envops:
+  block_end_string: '%]'
+  block_start_string: '[%'
+_subdirectory: template
+_message_before_copy: |
+  Thanks for generating a project using our template.
+
+  You'll be asked a series of questions whose answers will be used to
+  generate a tailored project for you.
+_message_after_copy: |
+  Your project "{{ project_name }}" has been created successfully!
+_message_before_update: |
+  Thanks for updating your project using our template.
+
+  You'll be asked a series of questions whose answers are pre-populated
+  with previously entered values. Feel free to change them as needed.
+_message_after_update: |
+  Your project "{{ project_name }}" has been updated successfully!
+  In case there are any conflicts, please resolve them. Then,
+  you're done.
+
+project_name:
+  default: Serious Scaffold Pybind11
+  help: 'Enter the name of the project in CamelCase format:'
+  type: str
+
+project_description:
+  default: |
+    [%- if project_name == 'Serious Scaffold Pybind11' -%]
+      A continuously evolving basic template for cpp development.
+    [%- endif -%]
+  help: 'Provide a brief description for the project:'
+  type: str
+
+copyright_license:
+  default: MIT License
+  choices:
+    - Apache Software License
+    - Boost Software License 1.0 (BSL-1.0)
+    - GNU Affero General Public License v3
+    - GNU General Public License v3 (GPLv3)
+    - GNU Lesser General Public License v3 (LGPLv3)
+    - MIT License
+    - Mozilla Public License 2.0 (MPL 2.0)
+    - The Unlicense (Unlicense)
+  help: Choose the project's license (e.g. "MIT", "GPL-3.0").
+  type: str
+
+copyright_year:
+  default: 2022-{{ "%Y" | strftime }}
+  help: Enter the copyright year or range (e.g. "2022-2023").
+  type: str
+
+author_name:
+  default: Your Name
+  help: 'Specify the name of the author:'
+  type: str
+
+organization_name:
+  default: |
+    [%- if project_name == 'Serious Scaffold Pybind11' -%]
+      Serious Scaffold
+    [%- endif -%]
+  help: 'Provide the name of the organization associated with the project:'
+  type: str
+
+copyright_holder:
+  default: '{{ organization_name }}'
+  help: Name(s) or organization(s) holding the copyright.
+  type: str
+
+author_email:
+  default: '{{ author_name|lower|replace(" ", ".") }}@{{ organization_name|lower|replace(" ", "-") }}.com'
+  help: 'Specify the email address of the author:'
+  type: str
+
+repo_platform:
+  default: github
+  choices:
+    GitHub: github
+    GitLab: gitlab
+    GitLab (self-managed): gitlab-self-managed
+  help: 'Choose the platform for the repository:'
+  type: str
+
+repo_host:
+  default: |-
+    [% if repo_platform == 'github' -%]
+      github.com
+    [%- elif repo_platform == 'gitlab' -%]
+      gitlab.com
+    [%- endif %]
+  help: 'Specify the host of the self-managed GitLab:'
+  type: str
+  when: '{{ repo_platform == "gitlab-self-managed" }}'
+
+page_host:
+  default: |-
+    [% if repo_platform == 'github' -%]
+      github.io
+    [%- elif repo_platform == 'gitlab' -%]
+      gitlab.io
+    [%- endif %]
+  help: 'Specify the host of the self-managed GitLab Pages:'
+  type: str
+  when: '{{ repo_platform == "gitlab-self-managed" }}'
+
+repo_namespace:
+  default: '{{ organization_name|lower|replace(" ", "-") }}'
+  help: 'Indicate the GitHub Repository Owner or GitLab Namespace. This is typically the account name of the author or the organization:'
+  type: str
+
+repo_name:
+  default: '{{ project_name|lower|replace(" ", "-") }}'
+  help: 'Provide a name for the repository:'
+  type: str
+
+module_name:
+  default: '{{ repo_name|lower|replace("-", "_") }}'
+  help: 'Specify the name of the primary module within the package (often used in "import <module_name>"):'
+  type: str
+
+create_devcontainer:
+  default: true
+  help: 'Whether to create a devcontainer configuration:'
+  type: bool
+
+docs_type:
+  default: sphinx
+  choices:
+    Sphinx: sphinx
+    MkDocs: mkdocs
+  help: 'Choose the type of documentation to generate:'
+  type: str
+
+use_cpm:
+  default: false
+  help: Whether to use CPM to manage C++ dependencies that will break up vcpkg dependency management.
+  type: bool
+
+use_conan:
+  default: false
+  help: Whether to use conan to manage C++ dependencies that will break up vcpkg dependency management.
+  type: bool
+
+compiled:
+  default: true
+  help: Whether to add _core compiled module.
+  type: bool
+
+use_codecov:
+  default: true
+  help: 'Whether to add codecov integration:'
+  type: bool
+
+codecov_notify_builds:
+  default: 1
+  help: 'Specify the number of builds to notify status for codecov:'
+  type: int
+  when: '{{ use_codecov == true }}'
+
+codecov_threshold:
+  default: 5%
+  help: 'Specify the minimum coverage threshold for codecov:'
+  type: str
+  when: '{{ use_codecov == true }}'
+
+use_codeql:
+  default: true
+  help: 'Whether to add codeql integration:'
+  type: bool
+  when: '{{ repo_platform == "github" }}'
+
+min_py:
+  default: '3.12'
+  choices:
+    - '3.8'
+    - '3.9'
+    - '3.10'
+    - '3.11'
+    - '3.12'
+    - '3.13'
+  help: 'Choose the minimal Python version the project should support:'
+  type: str
+
+max_py:
+  default: '3.12'
+  choices:
+    '3.8':
+      validator: '[% from pathjoin("includes", "version_compare.jinja") import version_higher_than_validator %]{{ version_higher_than_validator("3.8", min_py) }}'
+      value: '3.8'
+    '3.9':
+      validator: '[% from pathjoin("includes", "version_compare.jinja") import version_higher_than_validator %]{{ version_higher_than_validator("3.9", min_py) }}'
+      value: '3.9'
+    '3.10':
+      validator: '[% from pathjoin("includes", "version_compare.jinja") import version_higher_than_validator %]{{ version_higher_than_validator("3.10", min_py) }}'
+      value: '3.10'
+    '3.11':
+      validator: '[% from pathjoin("includes", "version_compare.jinja") import version_higher_than_validator %]{{ version_higher_than_validator("3.11", min_py) }}'
+      value: '3.11'
+    '3.12':
+      validator: '[% from pathjoin("includes", "version_compare.jinja") import version_higher_than_validator %]{{ version_higher_than_validator("3.12", min_py) }}'
+      value: '3.12'
+    '3.13':
+      value: '3.13'
+  help: 'Choose the maximal Python version the project should support:'
+  type: str
+
+default_py:
+  default: '{{ max_py }}'
+  choices:
+    '3.8':
+      validator: '[% from pathjoin("includes", "version_compare.jinja") import version_between_validator %]{{ version_between_validator("3.8", min_py, max_py) }}'
+      value: '3.8'
+    '3.9':
+      validator: '[% from pathjoin("includes", "version_compare.jinja") import version_between_validator %]{{ version_between_validator("3.9", min_py, max_py) }}'
+      value: '3.9'
+    '3.10':
+      validator: '[% from pathjoin("includes", "version_compare.jinja") import version_between_validator %]{{ version_between_validator("3.10", min_py, max_py) }}'
+      value: '3.10'
+    '3.11':
+      validator: '[% from pathjoin("includes", "version_compare.jinja") import version_between_validator %]{{ version_between_validator("3.11", min_py, max_py) }}'
+      value: '3.11'
+    '3.12':
+      validator: '[% from pathjoin("includes", "version_compare.jinja") import version_between_validator %]{{ version_between_validator("3.12", min_py, max_py) }}'
+      value: '3.12'
+    '3.13':
+      validator: '[% from pathjoin("includes", "version_compare.jinja") import version_between_validator %]{{ version_between_validator("3.13", min_py, max_py) }}'
+      value: '3.13'
+  help: 'Choose the default Python version for development, documentation generation, and package build:'
+  type: str

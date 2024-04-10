@@ -1,0 +1,123 @@
+[% from pathjoin("includes", "variable.jinja") import repo_url with context -%]
+[% from pathjoin("includes", "variable.jinja") import page_url with context -%]
+
+site_name: {{ project_name }}
+site_description: {{ project_description }}
+site_url: https://{{ page_url() }}
+repo_url: https://{{ repo_url() }}
+repo_name: {{ repo_namespace }}/{{ repo_name }}
+copyright: Copyright &copy; {{ copyright_year }} {{ copyright_holder }}
+edit_uri: edit/master
+docs_dir: .
+
+exclude_docs: |
+  out
+  docs/includes
+[%- if repo_name == 'ss-pybind11' %]
+  template
+[%- endif %]
+
+theme:
+  name: material
+
+  features:
+    - content.action.edit
+    - content.action.view
+    - content.code.copy
+    - content.code.select
+    - content.tooltips
+    - navigation.footer
+    - navigation.instant
+    - navigation.path
+    - navigation.sections
+    # - navigation.tabs
+    # - navigation.tabs.sticky
+    - navigation.top
+    - navigation.indexes
+    - toc.follow
+    # - toc.integrate
+
+  palette:
+    # Palette toggle for automatic mode
+    - media: (prefers-color-scheme)
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: '(prefers-color-scheme: light)'
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: '(prefers-color-scheme: dark)'
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  languages: en
+
+  icon:
+    logo: material/book-open-page-variant
+[%- if repo_platform == 'github' %]
+    repo: fontawesome/brands/github
+[%- elif repo_platform == 'gitlab' or repo_platform == 'gitlab-self-managed' %]
+    repo: fontawesome/brands/gitlab
+[%- endif %]
+
+extra:
+  generator: false
+
+extra_css:
+  - docs/css/mkdocstrings.css
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.emoji
+  - pymdownx.tasklist
+  - pymdownx.magiclink
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.snippets:
+      check_paths: true
+      auto_append:
+        - docs/includes/abbreviations.md
+  - toc:
+      permalink: ¤
+
+plugins:
+  - search
+  - same-dir
+  - git-revision-date-localized:
+      enable_creation_date: true
+      fallback_to_build_date: true
+      type: datetime
+      exclude:
+          - out/*
+  - minify:
+      minify_html: true
+      minify_js: true
+      minify_css: true
+      htmlmin_opts:
+        remove_comments: true
+      cache_safe: true
+
+watch:
+  - docs
+  - LICENSE
+  - README.md
+  - mkdocs.yml
+
+nav:
+  - Home: docs/index.md

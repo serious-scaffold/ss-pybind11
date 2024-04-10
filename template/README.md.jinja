@@ -1,0 +1,49 @@
+[% from pathjoin("includes", "variable.jinja") import license_url with context -%]
+[% from pathjoin("includes", "variable.jinja") import documentation_badge with context -%]
+[% from pathjoin("includes", "variable.jinja") import license_badge with context -%]
+[% from pathjoin("includes", "variable.jinja") import ss_badge with context -%]
+[% from pathjoin("includes", "variable.jinja") import pipeline_badge with context -%]
+[% from pathjoin("includes", "variable.jinja") import codecov_badge with context -%]
+[% from pathjoin("includes", "variable.jinja") import release_badge with context -%]
+# {{ project_name }}
+
+<!-- SPHINX-START -->
+
+{{ project_description }}
+
+{{ documentation_badge() }}
+{{ license_badge() }}
+{{ ss_badge() }}
+
+{{ pipeline_badge() }}
+{{ codecov_badge() }}
+{{ release_badge() }}
+
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[%- if compiled == true %]
+[![clang-format](https://img.shields.io/badge/clang--format-enabled-blue)](https://github.com/pre-commit/mirrors-clang-format)
+[%- endif %]
+[![cmake-format](https://img.shields.io/badge/cmake--format-enabled-blue)](https://github.com/cheshirekow/cmake-format-precommit)
+[![codespell](https://img.shields.io/badge/codespell-enabled-blue)](https://github.com/codespell-project/codespell)
+[![markdownlint](https://img.shields.io/badge/markdownlint-enabled-blue)](https://github.com/igorshubovych/markdownlint-cli)
+[![shellcheck](https://img.shields.io/badge/shellcheck-enabled-blue)](https://github.com/shellcheck-py/shellcheck-py)
+
+[% if repo_name == 'ss-pybind11' -%]
+## Features
+
+- Project setup and template update with [copier](https://github.com/copier-org/copier/).
+- Containerization for development and deployment with [dev container](https://containers.dev/).
+- Continuous Integration with [GitHub Actions](https://docs.github.com/actions).
+- Automate dependency updates with [Renovate](https://github.com/renovatebot/renovate).
+- Use [cmake-registry](https://github.com/msclock/cmake-registry) to provide various cmake modules and scripts.
+- Lint tool `pre-commit` integration with various linters, including [clang-format](https://github.com/pre-commit/mirrors-clang-format), [codespell](https://github.com/codespell-project/codespell), [markdownlint](https://github.com/igorshubovych/markdownlint-cli), and more.
+- Documentation generation with [sphinx](https://www.sphinx-doc.org/en/master/)[[furo](https://github.com/pradyunsg/furo)] or [mkdocs](https://www.mkdocs.org/)[[material](https://squidfunk.github.io/mkdocs-material/)].
+- Automatic release workflow with [semantic-release](https://github.com/semantic-release/semantic-release).
+- Maintainable [documentation](https://serious-scaffold.github.io/ss-pybind11/) guides for configuration, development, security and contribution based on ss-pybind11.
+[%- else -%]
+<!-- writes more things here -->
+[%- endif %]
+
+## License
+
+{{ copyright_license }}, for more details, see the [LICENSE]({{ license_url() }}) file.

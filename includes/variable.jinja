@@ -1,0 +1,69 @@
+[% macro repo_url() -%]
+  {{ repo_host }}/{{ repo_namespace }}/{{ repo_name }}
+[%- endmacro %]
+
+[% macro page_url() -%]
+  [% if repo_platform == 'github' -%]
+    {{ repo_namespace }}.github.io/{{ repo_name }}
+  [%- elif repo_platform == 'gitlab' or repo_platform == 'gitlab-self-managed' -%]
+    [%- set repo_namespace_root = repo_namespace.split("/")[0] -%]
+    {{ repo_namespace_root }}.{{ page_host }}{{ repo_namespace | replace(repo_namespace_root, "", 1) }}/{{ repo_name }}
+  [%- endif %]
+[%- endmacro %]
+
+[% macro license_url() -%]
+  [% if repo_platform == 'github' -%]
+    https://{{ repo_url() }}/blob/master/LICENSE
+  [%- elif repo_platform == 'gitlab' or repo_platform == 'gitlab-self-managed' -%]
+    https://{{ repo_url() }}/-/blob/master/LICENSE
+  [%- endif -%]
+[%- endmacro %]
+
+[% macro documentation_badge() -%]
+  [% if docs_type == 'sphinx' -%]
+[![Documentation](https://img.shields.io/badge/Documentation-sphinx-blue)](https://{{ page_url() }})
+  [%- elif docs_type == 'mkdocs' -%]
+[![Documentation](https://img.shields.io/badge/Documentation-mkdocs-blue)](https://{{ page_url() }})
+  [%- endif -%]
+[%- endmacro %]
+
+[% macro license_badge() -%]
+  [% if repo_platform == 'github' -%]
+[![License](https://img.shields.io/github/license/{{ repo_namespace }}/{{ repo_name }})]({{ license_url() }})
+  [%- elif repo_platform == 'gitlab' or repo_platform == 'gitlab-self-managed' -%]
+[![License](https://img.shields.io/gitlab/license/{{ repo_namespace }}/{{ repo_name }}?gitlab_url=https%3A%2F%2F{{ repo_host }})]({{ license_url() }})
+  [%- endif -%]
+[%- endmacro %]
+
+[% macro ss_badge() -%]
+[![SS Badge](https://img.shields.io/badge/Serious%20Scaffold-pybind11-blue)](https://github.com/serious-scaffold/ss-pybind11)
+[%- endmacro %]
+
+[% macro pipeline_badge() -%]
+  [% if repo_platform == 'github' -%]
+[![CI](https://{{ repo_url() }}/actions/workflows/ci.yml/badge.svg)](https://{{ repo_url() }}/actions/workflows/ci.yml)
+[![CD](https://{{ repo_url() }}/actions/workflows/cd.yml/badge.svg)](https://{{ repo_url() }}/actions/workflows/cd.yml)
+[![Renovate](https://{{ repo_url() }}/actions/workflows/renovate.yml/badge.svg)](https://{{ repo_url() }}/actions/workflows/renovate.yml)
+[![Semantic Release](https://{{ repo_url() }}/actions/workflows/semantic-release.yml/badge.svg)](https://{{ repo_url() }}/actions/workflows/semantic-release.yml)
+  [%- elif repo_platform == 'gitlab' or repo_platform == 'gitlab-self-managed' -%]
+[![CI](https://{{ repo_url() }}/badges/master/pipeline.svg)](https://{{ repo_url() }}/-/commits/master)
+  [%- endif %]
+[%- endmacro %]
+
+[% macro codecov_badge() -%]
+  [% if use_codecov == true -%]
+    [%- if repo_platform == 'github' -%]
+[![codecov](https://codecov.io/gh/{{ repo_namespace }}/{{ repo_name }}/branch/master/graph/badge.svg?token=123456789)](https://codecov.io/gh/{{ repo_namespace }}/{{ repo_name }})
+    [%- elif repo_platform == 'gitlab' or repo_platform == 'gitlab-self-managed' -%]
+[![codecov](https://codecov.io/gh/{{ repo_namespace }}/{{ repo_name }}/branch/master/graph/badge.svg?token=123456789)](https://codecov.io/gh/{{ repo_namespace }}/{{ repo_name }})
+    [%- endif -%]
+  [%- endif -%]
+[%- endmacro %]
+
+[% macro release_badge() -%]
+  [% if repo_platform == 'github' -%]
+[![Release](https://img.shields.io/github/v/release/{{ repo_namespace }}/{{ repo_name }})](https://github.com/{{ repo_namespace }}/{{ repo_name }}/releases)
+  [%- elif repo_platform == 'gitlab' or repo_platform == 'gitlab-self-managed' -%]
+[![Release](https://{{ repo_url() }}/-/badges/release.svg)](https://{{ repo_url() }}/-/releases)
+  [%- endif -%]
+[%- endmacro %]

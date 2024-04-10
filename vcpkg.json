@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "ss-pybind11",
+  "description": "A template of serious scaffold family based on pybind11.",
+  "builtin-baseline": "7adc2e4d49e8d0efc07a369079faa6bc3dbb90f3",
+  "homepage": "https://github.com/serious-scaffold/ss-pybind11",
+  "dependencies": [
+    "pybind11",
+    "cmake-modules",
+    "robotology-cmake-ycm"
+  ],
+  "overrides": [
+    {
+      "name": "pybind11",
+      "version": "2.13.5"
+    },
+    {
+      "name": "cmake-modules",
+      "version": "1.6.5"
+    },
+    {
+      "name": "robotology-cmake-ycm",
+      "version": "0.16.3"
+    }
+  ],
+  "vcpkg-configuration": {
+    "registries": [
+      {
+        "kind": "git",
+        "baseline": "94eec2ad9432c08ee1a1adfce536e5585d1355ba",
+        "repository": "https://github.com/msclock/cmake-registry",
+        "packages": [
+          "cmake-modules",
+          "robotology-cmake-ycm",
+          "vcpkg-cmake-module"
+        ]
+      }
+    ],
+    "overlay-ports": [
+      "cmake/vcpkg/ports"
+    ],
+    "overlay-triplets": [
+      "cmake/vcpkg/triplets"
+    ]
+  }
+}

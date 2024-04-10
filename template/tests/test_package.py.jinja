@@ -1,0 +1,9 @@
+from __future__ import annotations
+
+from importlib_metadata import version
+
+import {{ module_name }} as m
+
+
+def test_version():
+    assert version("{{ module_name }}") == m.__version__

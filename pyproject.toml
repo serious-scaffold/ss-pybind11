@@ -1,0 +1,165 @@
+[build-system]
+requires = ["scikit-build-core"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "ss_pybind11"
+description = "A template of serious scaffold family based on pybind11."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+  { email = "msclock@126.com", name = "msclock" },
+]
+requires-python = ">=3.8"
+classifiers = [
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering",
+  "Typing :: Typed",
+]
+dynamic = ["version"]
+dependencies = [
+  "typing-extensions>=3.10.0; python_version<'3.9'",
+  "importlib_metadata>=1.4",
+]
+
+[project.optional-dependencies]
+test = ["pytest >=6", "pytest-cov >=3"]
+dev = ["pytest >=6", "pytest-cov >=3"]
+docs = [
+  "sphinx>=7.0",
+  "myst_parser>=0.13",
+  "sphinx_copybutton",
+  "sphinx_autodoc_typehints",
+  "furo>=2023.08.17",
+]
+
+[project.urls]
+Homepage = "https://github.com/serious-scaffold/ss-pybind11"
+"Bug Tracker" = "https://github.com/serious-scaffold/ss-pybind11/issues"
+Discussions = "https://github.com/serious-scaffold/ss-pybind11/discussions"
+Changelog = "https://github.com/serious-scaffold/ss-pybind11/releases"
+
+[tool.scikit-build]
+minimum-version = "0.9"
+build-dir = "build/{wheel_tag}"
+cmake.verbose = true
+logging.level = "DEBUG"
+metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
+sdist.include = ["src/ss_pybind11/_version.py"]
+cmake.args = [
+  "-DBUILD_TESTING=OFF",
+  "-DCMAKE_BUILD_TYPE=ReWithDebInfo", # Required RelWithDebInfo or Release
+  "-DCMAKE_TOOLCHAIN_FILE=cmake/vcpkg/vcpkg.toolchain.cmake",
+  "-DVCPKG_OVERLAY_TRIPLETS=cmake/vcpkg/triplets",
+  "-DVCPKG_OVERLAY_PORTS=cmake/vcpkg/ports"
+]
+
+[tool.setuptools_scm]
+write_to = "src/ss_pybind11/_version.py"
+
+[tool.cibuildwheel]
+build-verbosity = 1
+test-command = "pytest {project}/tests"
+test-extras = ["test"]
+test-skip = ["*-win_arm64", "*-macosx_universal2:arm64"]
+
+[tool.cibuildwheel.linux]
+before-build =[
+  'yum install zip -y || apk add zip || true',
+  'apt update && apt install zip -y || true',
+  'pip install cmake ninja',
+  'cmake --version', 'git --version', 'ninja --version',
+]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
+xfail_strict = true
+filterwarnings = ["error"]
+log_cli_level = "INFO"
+testpaths = ["tests"]
+
+[tool.coverage]
+run.source = ["ss_pybind11"]
+report.exclude_also = ['\.\.\.', 'if typing.TYPE_CHECKING:']
+
+[tool.mypy]
+files = ["src", "tests"]
+python_version = "3.8"
+warn_unused_configs = true
+strict = true
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+warn_unreachable = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
+[[tool.mypy.overrides]]
+module = "ss_pybind11.*"
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+
+[tool.ruff]
+src = ["src"]
+
+[tool.ruff.lint]
+extend-select = [
+  "B",   # flake8-bugbear
+  "I",   # isort
+  "ARG", # flake8-unused-arguments
+  "C4",  # flake8-comprehensions
+  "EM",  # flake8-errmsg
+  "ICN", # flake8-import-conventions
+  "G",   # flake8-logging-format
+  "PGH", # pygrep-hooks
+  "PIE", # flake8-pie
+  "PL",  # pylint
+  "PT",  # flake8-pytest-style
+  "PTH", # flake8-use-pathlib
+  "RET", # flake8-return
+  "RUF", # Ruff-specific
+  "SIM", # flake8-simplify
+  "T20", # flake8-print
+  "UP",  # pyupgrade
+  "YTT", # flake8-2020
+  "EXE", # flake8-executable
+  "NPY", # NumPy specific rules
+  "PD",  # pandas-vet
+]
+ignore = [
+  "PLR09",   # Too many <...>
+  "PLR2004", # Magic value used in comparison
+  "ISC001",  # Conflicts with formatter
+]
+isort.required-imports = ["from __future__ import annotations"]
+# Uncomment if using a _compat.typing backport
+# typing-modules = ["ss_pybind11._compat.typing"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["T20"]
+"noxfile.py" = ["T20"]
+
+[tool.pylint]
+py-version = "3.8"
+ignore-paths = [".*/_version.py"]
+extension-pkg-allow-list = ["ss_pybind11._core"]
+reports.output-format = "colorized"
+similarities.ignore-imports = "yes"
+messages_control.disable = [
+  "design",
+  "fixme",
+  "line-too-long",
+  "missing-module-docstring",
+  "wrong-import-position",
+]

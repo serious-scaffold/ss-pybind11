@@ -1,0 +1,79 @@
+[%- from pathjoin("includes", "variable.jinja") import repo_url with context -%]
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "{{ repo_name }}",
+  "description": "{{ project_description }}",
+  "builtin-baseline": "7adc2e4d49e8d0efc07a369079faa6bc3dbb90f3",
+  "homepage": "https://{{ repo_url() }}",
+  "dependencies": [
+[%- if compiled == true %]
+    "pybind11",
+[%- endif %]
+[%- if use_conan == true %]
+    "cmake-conan",
+[%- endif %]
+[%- if use_cpm == true %]
+    "cmake-cpm",
+[%- endif %]
+    "cmake-modules"
+[%- if compiled == true %],
+    "robotology-cmake-ycm"
+[%- endif %]
+  ],
+  "overrides": [
+[%- if compiled == true %]
+    {
+      "name": "pybind11",
+      "version": "2.13.5"
+    },
+[%- endif %]
+[%- if use_conan == true %]
+    {
+      "name": "cmake-conan",
+      "version": "0.18.1"
+    },
+[%- endif %]
+[%- if use_cpm == true %]
+    {
+      "name": "cmake-cpm",
+      "version": "0.38.6#2"
+    },
+[%- endif %]
+    {
+      "name": "cmake-modules",
+      "version": "1.6.5"
+    }
+[%- if compiled == true %],
+    {
+      "name": "robotology-cmake-ycm",
+      "version": "0.16.3"
+    }
+[%- endif %]
+  ],
+  "vcpkg-configuration": {
+    "registries": [
+      {
+        "kind": "git",
+        "baseline": "94eec2ad9432c08ee1a1adfce536e5585d1355ba",
+        "repository": "https://github.com/msclock/cmake-registry",
+        "packages": [
+[%- if use_conan == true %]
+          "cmake-conan",
+[%- endif %]
+[%- if use_cpm == true %]
+          "cmake-cpm",
+[%- endif %]
+          "cmake-modules",
+          "robotology-cmake-ycm",
+          "vcpkg-cmake-module"
+        ]
+      }
+    ],
+    "overlay-ports": [
+      "cmake/vcpkg/ports"
+    ],
+    "overlay-triplets": [
+      "cmake/vcpkg/triplets"
+    ]
+  }
+}
