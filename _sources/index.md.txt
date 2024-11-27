@@ -19,7 +19,6 @@ Overview <self>
 
 <!-- Disable to show when there is no api generation in the docs -->
 
-## Content
 ```{toctree}
 :maxdepth: 1
 :titlesonly:
