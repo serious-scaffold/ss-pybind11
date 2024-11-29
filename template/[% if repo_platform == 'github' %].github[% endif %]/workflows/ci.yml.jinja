@@ -94,7 +94,7 @@ jobs:
     name: Check Python {{ '${{ matrix.python-version }} on ${{ matrix.runs-on }}' }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
 
@@ -108,7 +108,7 @@ jobs:
           key: {{ '${{ matrix.python-version }}-${{ matrix.runs-on }}-${{ hashFiles(\'vcpkg.json\') }}' }}
           restore-keys: {{ '${{ matrix.python-version }}-${{ matrix.runs-on }}-${{ hashFiles(\'vcpkg.json\') }}' }}
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5
         with:
           python-version: {{ '${{ matrix.python-version }}' }}
 
@@ -134,7 +134,7 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
 
@@ -148,7 +148,7 @@ jobs:
           key: docs-{{ '${{ hashFiles(\'vcpkg.json\') }}' }}
           restore-keys: docs-{{ '${{ hashFiles(\'vcpkg.json\') }}' }}
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5
         with:
           python-version: 3.x
 
@@ -177,7 +177,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5
         with:
           python-version: 3.x
 
