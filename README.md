@@ -14,6 +14,8 @@ A template of serious scaffold family based on pybind11.
 [![Semantic Release](https://github.com/serious-scaffold/ss-pybind11/actions/workflows/semantic-release.yml/badge.svg)](https://github.com/serious-scaffold/ss-pybind11/actions/workflows/semantic-release.yml)
 [![codecov](https://codecov.io/gh/serious-scaffold/ss-pybind11/branch/master/graph/badge.svg?token=123456789)](https://codecov.io/gh/serious-scaffold/ss-pybind11)
 [![Release](https://img.shields.io/github/v/release/serious-scaffold/ss-pybind11)](https://github.com/serious-scaffold/ss-pybind11/releases)
+[![PyPI](https://img.shields.io/pypi/v/ss_pybind11)](https://pypi.org/project/ss_pybind11/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ss_pybind11)](https://pypi.org/project/ss_pybind11/)
 
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![clang-format](https://img.shields.io/badge/clang--format-enabled-blue)](https://github.com/pre-commit/mirrors-clang-format)
