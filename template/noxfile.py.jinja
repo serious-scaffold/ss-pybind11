@@ -94,9 +94,9 @@ def docs(session: nox.Session) -> None:
         shared_args.append("--strict")
 
     if args.serve:
-        session.run("mkdocs", "--serve")
+        session.run("mkdocs", "serve", *posargs)
     else:
-        session.run("mkdocs", "build", "-d", "docs/_build/html")
+        session.run("mkdocs", *shared_args)
 [% endif %]
 
 @nox.session
