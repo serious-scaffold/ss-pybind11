@@ -1,5 +1,6 @@
 [% from pathjoin("includes", "variable.jinja") import repo_url with context -%]
 [% from pathjoin("includes", "variable.jinja") import page_url with context -%]
+[%- from pathjoin("includes", "utilities.jinja") import first_letters with context -%]
 
 site_name: {{ project_name }}
 site_description: {{ project_description }}
@@ -12,6 +13,7 @@ docs_dir: .
 
 exclude_docs: |
   out
+  build
   docs/includes
 [%- if repo_name == 'ss-pybind11' %]
   template
@@ -19,6 +21,7 @@ exclude_docs: |
 
 theme:
   name: material
+  favicon: "https://img.shields.io/badge/{{ first_letters(project_name) }}-blue"
 
   features:
     - content.action.edit
@@ -103,8 +106,6 @@ plugins:
       enable_creation_date: true
       fallback_to_build_date: true
       type: datetime
-      exclude:
-          - out/*
   - minify:
       minify_html: true
       minify_js: true
