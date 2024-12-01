@@ -65,5 +65,7 @@
 [![Release](https://img.shields.io/github/v/release/{{ repo_namespace }}/{{ repo_name }})](https://github.com/{{ repo_namespace }}/{{ repo_name }}/releases)
   [%- elif repo_platform == 'gitlab' or repo_platform == 'gitlab-self-managed' -%]
 [![Release](https://{{ repo_url() }}/-/badges/release.svg)](https://{{ repo_url() }}/-/releases)
-  [%- endif -%]
+  [%- endif %]
+[![PyPI](https://img.shields.io/pypi/v/{{ module_name }})](https://pypi.org/project/{{ module_name }}/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/{{ module_name }})](https://pypi.org/project/{{ module_name }}/)
 [%- endmacro %]
