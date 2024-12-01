@@ -7,9 +7,7 @@ name = "ss_pybind11"
 description = "A template of serious scaffold family based on pybind11."
 readme = "README.md"
 license = { text = "MIT" }
-authors = [
-  { email = "msclock@126.com", name = "msclock" },
-]
+authors = [{ email = "msclock@126.com", name = "msclock" }]
 requires-python = ">=3.8"
 classifiers = [
   "Intended Audience :: Science/Research",
@@ -60,10 +58,10 @@ metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
 sdist.include = ["src/ss_pybind11/_version.py"]
 cmake.args = [
   "-DBUILD_TESTING=OFF",
-  "-DCMAKE_BUILD_TYPE=ReWithDebInfo", # Required RelWithDebInfo or Release
+  "-DCMAKE_BUILD_TYPE=ReWithDebInfo",
   "-DCMAKE_TOOLCHAIN_FILE=cmake/vcpkg/vcpkg.toolchain.cmake",
   "-DVCPKG_OVERLAY_TRIPLETS=cmake/vcpkg/triplets",
-  "-DVCPKG_OVERLAY_PORTS=cmake/vcpkg/ports"
+  "-DVCPKG_OVERLAY_PORTS=cmake/vcpkg/ports",
 ]
 
 [tool.setuptools_scm]
@@ -76,12 +74,18 @@ test-extras = ["test"]
 test-skip = ["*-win_arm64", "*-macosx_universal2:arm64"]
 
 [tool.cibuildwheel.linux]
-before-build =[
+before-build = [
   'yum install zip -y || apk add zip || true',
-  'apt update && apt install zip -y || true',
+  'apt update && apt install zip pkg-config -y || true',
   'pip install cmake ninja',
-  'cmake --version', 'git --version', 'ninja --version',
+  'cmake --version',
+  'git --version',
+  'ninja --version',
 ]
+
+[[tool.cibuildwheel.overrides]]
+select = "*linux_{aarch64,armv7l,ppc64le,s390x}"
+environment = { VCPKG_FORCE_SYSTEM_BINARIES = "1" }
 
 [tool.pytest.ini_options]
 minversion = "6.0"
