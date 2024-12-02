@@ -112,7 +112,7 @@ def template_build(session: nox.Session) -> None:
     session.run(
         "pipx",
         "run",
-        "copier==9.3.1",
+        "copier",
         "copy",
         "-r",
         "HEAD",
