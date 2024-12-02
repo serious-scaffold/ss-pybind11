@@ -117,6 +117,7 @@
       ],
       "postUpgradeTasks": {
         "commands": [
+          "apt update && apt install python3-pip -y",
           "git stash",
           "pip install copier==9.4.1",
           "copier update --defaults --vcs-ref {{ '{{{newVersion}}}' }}"
