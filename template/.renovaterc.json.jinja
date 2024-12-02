@@ -113,7 +113,7 @@
     {
       "commitMessageTopic": "serious-scaffold",
       "matchDepTypes": [
-        "copier-template"
+        "ss-template"
       ],
       "postUpgradeTasks": {
         "commands": [
@@ -123,7 +123,7 @@
           "copier update --defaults --vcs-ref {{ '{{{newVersion}}}' }}"
         ]
       },
-      "semanticCommitScope": "copier-template"
+      "semanticCommitScope": "ss-template"
     },
     {
       "description": "Group apt packages to avoid failure when multiple packages are outdated.",
@@ -184,7 +184,7 @@
       "customType": "regex",
       "datasourceTemplate": "git-tags",
       "depNameTemplate": "https://github.com/serious-scaffold/ss-pybind11.git",
-      "depTypeTemplate": "copier-template",
+      "depTypeTemplate": "ss-template",
       "fileMatch": [
         "^\\.copier-answers\\.yml$"
       ],
