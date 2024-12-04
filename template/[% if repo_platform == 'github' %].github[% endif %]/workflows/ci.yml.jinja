@@ -85,11 +85,11 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ['3.8', '3.12']
-        runs-on: [ubuntu-22.04, macos-14, windows-2022]
+        runs-on: [ubuntu-22.04, macos-14, windows-2022] # renovate: github-runner
 
         include:
           - python-version: pypy-3.10
-            runs-on: ubuntu-22.04
+            runs-on: ubuntu-22.04 # renovate: github-runner
 
     name: Check Python {{ '${{ matrix.python-version }} on ${{ matrix.runs-on }}' }}
 
