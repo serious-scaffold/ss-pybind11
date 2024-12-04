@@ -24,9 +24,9 @@
         "action"
       ],
       "postUpgradeTasks": {
-          "commands": [
-              "find template -type f -exec sed -i -E 's/{{{replace \"/\" \"\\/\" depName}}}(.*)@{{{currentDigest}}} # {{{currentValue}}}/{{{replace \"/\" \"\\/\" depName}}}\\1@{{{newDigest}}} # {{{newValue}}}/g' {} +"
-          ]
+        "commands": [
+          "find template -type f -exec sed -i -E 's/{{{replace \"/\" \"\\/\" depName}}}(.*)@{{{currentDigest}}} # {{{currentValue}}}/{{{replace \"/\" \"\\/\" depName}}}\\1@{{{newDigest}}} # {{{newValue}}}/g' {} +"
+        ]
       }
     },
     {
@@ -116,6 +116,22 @@
       "matchStrings": [
         "pipx? install.* (?<depName>.*?)==(?<currentValue>.*?)[\\s\";]"
       ]
+    },
+    {
+      "customType": "regex",
+      "datasourceTemplate": "github-runners",
+      "depTypeTemplate": "github-runner",
+      "description": "Match GitHub runner defined in GitHub Actions matrix strategy",
+      "fileMatch": [
+        "^\\.github/workflows/.+\\.yml$",
+        "^template/.*\\.github.*/workflows/.+\\.yml(\\.jinja)?$"
+      ],
+      "matchStringsStrategy": "recursive",
+      "matchStrings": [
+        "[-:] (.*) # renovate: github-runner",
+        "(?<depName>ubuntu|windows|macos)-(?<currentValue>[\\d\\.\\-\\w]+)"
+      ],
+      "versioningTemplate": "docker"
     },
     {
       "description": "Update vcpkg.json builtin-baseline with git hash",
