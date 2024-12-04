@@ -21,7 +21,7 @@ env:
 
 jobs:
   pre-commit:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
@@ -43,7 +43,7 @@ jobs:
 [% if repo_name == 'ss-pybind11' %]
   consistency:
     if: {{ '${{ !cancelled() && ! failure() }}' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
@@ -85,11 +85,11 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ['3.8', '3.12']
-        runs-on: [ubuntu-22.04, macos-14, windows-2022] # renovate: github-runner
+        runs-on: [ubuntu-24.04, macos-14, windows-2022] # renovate: github-runner
 
         include:
           - python-version: pypy-3.10
-            runs-on: ubuntu-22.04 # renovate: github-runner
+            runs-on: ubuntu-24.04 # renovate: github-runner
 
     name: Check Python {{ '${{ matrix.python-version }} on ${{ matrix.runs-on }}' }}
 
@@ -125,7 +125,7 @@ jobs:
 [% endif %]
 
   check-docs:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [pre-commit
 [%- if repo_name == 'ss-pybind11' -%]
     , consistency
@@ -163,7 +163,7 @@ jobs:
 
 
   check-mkdocs-docs:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [pre-commit, consistency]
     timeout-minutes: 15
 
@@ -200,7 +200,7 @@ jobs:
 [%- if repo_name == 'ss-pybind11' %]
       - check-mkdocs-docs
 [%- endif %]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 2
     permissions:
       pull-requests: write
