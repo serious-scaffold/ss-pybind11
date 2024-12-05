@@ -13,13 +13,20 @@
   "platformAutomerge": true,
   "packageRules": [
     {
+      "automerge": true,
+      "addLabels": [
+        "auto-approval"
+      ],
+      "extends": [
+        "schedule:earlyMondays",
+        "schedule:automergeMonthly"
+      ],
       "matchUpdateTypes": [
         "minor",
         "patch",
         "pin",
         "digest"
-      ],
-      "automerge": true
+      ]
     },
 [%- if repo_name == 'ss-pybind11' %]
     {
@@ -80,9 +87,6 @@
       "description": "Group renovate docker tag and pre-commit-hooks tag",
       "groupName": "renovate group",
       "addLabels": [
-[%- if repo_platform == 'github' %]
-        "auto-approval",
-[%- endif %]
         "renovate"
       ],
       "matchDatasources": [

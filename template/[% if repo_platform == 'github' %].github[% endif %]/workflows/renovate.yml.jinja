@@ -2,8 +2,8 @@ name: Renovate
 
 on:
   schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron: '*/15 0-3 * * 1'
+    # Match renovate schedule:earlyMondays and schedule:automergeMonthly
+    - cron: '* 0-3 * * *'
   workflow_dispatch:
 
 jobs:

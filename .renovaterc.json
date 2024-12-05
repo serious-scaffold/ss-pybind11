@@ -11,13 +11,20 @@
   "platformAutomerge": true,
   "packageRules": [
     {
+      "automerge": true,
+      "addLabels": [
+        "auto-approval"
+      ],
+      "extends": [
+        "schedule:earlyMondays",
+        "schedule:automergeMonthly"
+      ],
       "matchUpdateTypes": [
         "minor",
         "patch",
         "pin",
         "digest"
-      ],
-      "automerge": true
+      ]
     },
     {
       "matchDepTypes": [
@@ -76,7 +83,6 @@
       "description": "Group renovate docker tag and pre-commit-hooks tag",
       "groupName": "renovate group",
       "addLabels": [
-        "auto-approval",
         "renovate"
       ],
       "matchDatasources": [
