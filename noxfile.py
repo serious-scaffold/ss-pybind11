@@ -94,7 +94,7 @@ def build(session: nox.Session) -> None:
 
 
 @nox.session(reuse_venv=True)
-def template_build(session: nox.Session) -> None:
+def template(session: nox.Session) -> None:
     """
     Build template for the current repo only.
     """
