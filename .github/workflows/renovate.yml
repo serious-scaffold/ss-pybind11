@@ -3,7 +3,7 @@ name: Renovate
 on:
   schedule:
     # Match renovate schedule:earlyMondays and schedule:automergeMonthly
-    - cron: '* 0-3 * * *'
+    - cron: '*/15 0-3 * * *'
   workflow_dispatch:
 
 jobs:
