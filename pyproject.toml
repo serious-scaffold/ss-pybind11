@@ -7,7 +7,7 @@ name = "ss_pybind11"
 description = "A template of serious scaffold family based on pybind11."
 readme = "README.md"
 license = { text = "MIT" }
-authors = [{ email = "msclock@126.com", name = "msclock" }]
+authors = [{ email = "msclock@126.com", name = "l.feng" }]
 requires-python = ">=3.8"
 classifiers = [
   "Intended Audience :: Science/Research",

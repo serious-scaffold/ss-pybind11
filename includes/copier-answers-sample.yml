@@ -1,8 +1,9 @@
 # Default values for verifying the current project structure
 author_email: msclock@126.com
-author_name: msclock
+author_name: l.feng
 codecov_notify_builds: 1
 codecov_threshold: 5%
+compiled: true
 copyright_holder: Serious Scaffold
 copyright_license: MIT License
 copyright_year: 2024
