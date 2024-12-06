@@ -100,6 +100,7 @@ jobs:
             ~/vcpkg
             ~/.cache/pip
             ~/.cache/vcpkg
+            ~/AppData/Local/vcpkg
           key: ${{ matrix.python-version }}-${{ matrix.runs-on }}-${{ hashFiles('vcpkg.json') }}
           restore-keys: ${{ matrix.python-version }}-${{ matrix.runs-on }}-${{ hashFiles('vcpkg.json') }}
 
