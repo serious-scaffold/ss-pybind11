@@ -138,6 +138,12 @@ repos:
         types_or: [c++, c, cuda]
 [%- endif %]
 
+  # Check for markdown
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.41.0
+    hooks:
+      - id: markdownlint-fix
+
   # Check for renovate config
   - repo: https://github.com/renovatebot/pre-commit-hooks
     rev: 39.49.0
