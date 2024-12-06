@@ -23,7 +23,7 @@ ROOT = Path(__file__).parent.parent.resolve()
 
 project = "Serious Scaffold Pybind11"
 copyright = "2024 Serious Scaffold"
-author = "msclock"
+author = "l.feng"
 
 # -- General configuration ---------------------------------------------------
 
