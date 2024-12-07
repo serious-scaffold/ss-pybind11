@@ -24,3 +24,5 @@ use_cpm: false
 min_py: '3.8'
 max_py: '3.13'
 default_py: '3.10'
+ss_cmake_use_cpm: false
+ss_cmake_use_conan: false
