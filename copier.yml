@@ -146,6 +146,18 @@ compiled:
   help: Whether to add _core compiled module.
   type: bool
 
+use_cpm:
+  default: false
+  help: Whether to use CPM to manage C++ dependencies.
+  type: bool
+  when: '{{ compiled == true }}'
+
+use_conan:
+  default: false
+  help: Whether to use conan to manage C++ dependencies.
+  type: bool
+  when: '{{ compiled == true }}'
+
 use_codecov:
   default: true
   help: 'Whether to add codecov integration:'
@@ -268,13 +280,13 @@ ss_cmake_configure_warnings_and_hardening:
   when: false
 
 ss_cmake_use_cpm:
-  default: false
+  default: '{{ use_cpm }}'
   help: Whether to use CPM to manage C++ dependencies that will break up vcpkg dependency management.
   type: bool
-  when: '{{ compiled == true }}'
+  when: false
 
 ss_cmake_use_conan:
-  default: false
+  default: '{{ use_conan }}'
   help: Whether to use conan to manage C++ dependencies that will break up vcpkg dependency management.
   type: bool
-  when: '{{ compiled == true }}'
+  when: false
