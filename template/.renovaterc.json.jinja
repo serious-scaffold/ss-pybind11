@@ -101,12 +101,10 @@
       "datasourceTemplate": "pypi",
       "fileMatch": [
         "^\\.github/workflows/.+\\.yml$",
-        "^\\.renovaterc\\.json$",
-        "^Makefile$"
+        "^\\.renovaterc\\.json$"
 [%- if repo_name == 'ss-pybind11' %],
         "^template/.*?/workflows/.+\\.yml(\\.jinja)?$",
-        "^template/\\.renovaterc\\.json\\.jinja$",
-        "^template/Makefile\\.jinja$"
+        "^template/\\.renovaterc\\.json\\.jinja$"
 [%- endif %]
       ],
       "matchStrings": [
@@ -119,8 +117,10 @@
       "depTypeTemplate": "github-runner",
       "description": "Match GitHub runner defined in GitHub Actions matrix strategy",
       "fileMatch": [
-        "^\\.github/workflows/.+\\.yml$",
+        "^\\.github/workflows/.+\\.yml$"
+[%- if repo_name == 'ss-pybind11' %],
         "^template/.*\\.github.*/workflows/.+\\.yml(\\.jinja)?$"
+[%- endif %]
       ],
       "matchStringsStrategy": "recursive",
       "matchStrings": [

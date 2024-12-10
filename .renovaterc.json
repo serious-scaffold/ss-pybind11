@@ -94,10 +94,8 @@
       "fileMatch": [
         "^\\.github/workflows/.+\\.yml$",
         "^\\.renovaterc\\.json$",
-        "^Makefile$",
         "^template/.*?/workflows/.+\\.yml(\\.jinja)?$",
-        "^template/\\.renovaterc\\.json\\.jinja$",
-        "^template/Makefile\\.jinja$"
+        "^template/\\.renovaterc\\.json\\.jinja$"
       ],
       "matchStrings": [
         "pipx? install.* (?<depName>.*?)==(?<currentValue>.*?)[\\s\";]"
