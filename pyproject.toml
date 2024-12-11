@@ -82,6 +82,7 @@ before-build = [
   'git --version',
   'ninja --version',
 ]
+archs = ["auto", "aarch64", "armv7l", "ppc64le", "s390x"]
 
 [[tool.cibuildwheel.overrides]]
 select = "*linux_{aarch64,armv7l,ppc64le,s390x}"
