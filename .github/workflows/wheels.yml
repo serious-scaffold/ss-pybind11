@@ -1,13 +1,16 @@
-name: CD
+name: Wheels
 
 on:
   workflow_dispatch:
+
+  workflow_call:
+
   release:
     types:
       - published
 
 concurrency:
-  group: {{ '${{ github.workflow }}-${{ github.ref }}' }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -31,8 +34,8 @@ jobs:
           path: dist/*.tar.gz
 
   build_wheels:
-    name: Wheel on {{ '${{ matrix.os }}' }}
-    runs-on: {{ '${{ matrix.os }}' }}
+    name: Wheel on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
@@ -48,7 +51,7 @@ jobs:
       - name: Upload wheels
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4
         with:
-          name: {{ 'cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}' }}
+          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
           path: wheelhouse/*.whl
 
   upload_all:
@@ -68,6 +71,6 @@ jobs:
 
       - uses: pypa/gh-action-pypi-publish@release/v1
         env:
-          PYPI_API_TOKEN: {{ '${{ secrets.PYPI_API_TOKEN  }}' }}
+          PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN  }}
         with:
-          password: {{ '${{ secrets.PYPI_API_TOKEN }}' }}
+          password: ${{ secrets.PYPI_API_TOKEN }}
