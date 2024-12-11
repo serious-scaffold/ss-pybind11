@@ -95,7 +95,10 @@ repos:
           (?x)(
               ^(cmake/vcpkg/ports/.*) |
               ^(cmake/vcpkg/triplets/.*) |
-              ^(cmake/vcpkg/scripts/toolchains/.*)
+              ^(cmake/vcpkg/scripts/toolchains/.*) |
+              ^(template/cmake/vcpkg/ports/.*) |
+              ^(template/cmake/vcpkg/triplets/.*) |
+              ^(template/cmake/vcpkg/scripts/toolchains/.*)
           )
 
   # Check pyproject

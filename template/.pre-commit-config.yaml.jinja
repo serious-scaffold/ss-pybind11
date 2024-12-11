@@ -96,6 +96,11 @@ repos:
               ^(cmake/vcpkg/ports/.*) |
               ^(cmake/vcpkg/triplets/.*) |
               ^(cmake/vcpkg/scripts/toolchains/.*)
+[%- if repo_name ==  'ss-pybind11' %] |
+              ^(template/cmake/vcpkg/ports/.*) |
+              ^(template/cmake/vcpkg/triplets/.*) |
+              ^(template/cmake/vcpkg/scripts/toolchains/.*)
+[%- endif %]
           )
 
   # Check pyproject
