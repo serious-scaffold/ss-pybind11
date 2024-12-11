@@ -33,32 +33,54 @@ jobs:
           name: cibw-sdist
           path: dist/*.tar.gz
 
+
   build_wheels:
-    name: Wheel on ${{ matrix.os }}
+    name: Build ${{ matrix.arch }} wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+
     strategy:
-      fail-fast: false
       matrix:
-        os: [ubuntu-24.04, windows-2022, macos-13, macos-14] # renovate: github-runner
+        arch: [aarch64, ppc64le, s390x, armv7l, x86_64, i686]
+        os: [ubuntu-24.04] # renovate: github-runner
+        use_qemu: [aarch64 ppc64le s390x armv7l]
+        include:
+          - os: windows-2019
+            arch: AMD64
+          - os: windows-2019
+            arch: x86
+          - os: windows-2022
+            arch: ARM64
+          - os: macos-13
+            arch: x86_64
+          - os: macos-latest
+            arch: arm64
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
 
-      - name: Set up QEMU
-        if: runner.os == 'Linux'
-        uses: docker/setup-qemu-action@v3
+      - name: Set up msvc on Windows
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1
         with:
-          platforms: all
+          arch: ${{ matrix.arch }}
 
-      - uses: pypa/cibuildwheel@ee63bf16da6cddfb925f542f2c7b59ad50e93969 # v2.22.0
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf # v3.2.0
+        if: runner.os == 'Linux' && contains(matrix.use_qemu, matrix.arch)
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@ee63bf16da6cddfb925f542f2c7b59ad50e93969 # v2.22.0
+        env:
+          CIBW_ARCHS: ${{ matrix.arch }}
 
       - name: Upload wheels
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4
         with:
-          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          name: cibw-${{ matrix.os }}-${{ matrix.arch }}
           path: wheelhouse/*.whl
+
 
   upload_all:
     needs: [build_wheels, build_sdist]
