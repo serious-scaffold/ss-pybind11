@@ -76,7 +76,11 @@ jobs:
 
 
   wheels:
-    needs: [pre-commit]
+    needs: [pre-commit
+[%- if repo_name == 'ss-pybind11' -%]
+    , consistency
+[%- endif -%]
+    ]
     uses: ./.github/workflows/wheels.yml
     secrets: inherit
 [%- if use_codecov == true %]

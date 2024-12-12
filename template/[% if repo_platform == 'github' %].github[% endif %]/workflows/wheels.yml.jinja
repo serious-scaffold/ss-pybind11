@@ -35,31 +35,21 @@ jobs:
 
 
   build_wheels:
-    name: Build {{ '${{ matrix.arch }}-${{ matrix.build }} wheels on ${{ matrix.os }}' }}
+    name: Build {{ '${{ matrix.build }}-${{ matrix.arch }} wheels on ${{ matrix.os }}' }}
     runs-on: {{ '${{ matrix.os }}' }}
 
     strategy:
       matrix:
-        arch: [aarch64, ppc64le, s390x, armv7l, x86_64, i686]
         build: [manylinux, musllinux]
+        arch: [aarch64, ppc64le, s390x, armv7l, x86_64, i686]
         os: [ubuntu-24.04] # renovate: github-runner
-        use_qemu: [aarch64 ppc64le s390x armv7l]
+        use_qemu: [true]
         include:
-          - os: windows-2019
-            arch: AMD64
-            build: win
-          - os: windows-2019
-            arch: x86
-            build: win
-          - os: windows-2022
-            arch: ARM64
-            build: win
-          - os: macos-13
-            arch: x86_64
-            build: macos
-          - os: macos-latest
-            arch: arm64
-            build: macos
+          - {os: windows-2019, arch: AMD64, build: win, use_qemu: false}
+          - {os: windows-2019, arch: x86, build: win, use_qemu: false}
+          - {os: windows-2022, arch: ARM64, build: win, use_qemu: false}
+          - {os: macos-13, arch: x86_64, build: macos, use_qemu: false}
+          - {os: macos-14, arch: arm64, build: macos, use_qemu: false}
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -74,7 +64,7 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf # v3.2.0
-        if: runner.os == 'Linux' && contains(matrix.use_qemu, matrix.arch)
+        if: runner.os == 'Linux' && matrix.use_qemu
 
       - name: Build wheels
         uses: pypa/cibuildwheel@ee63bf16da6cddfb925f542f2c7b59ad50e93969 # v2.22.0
@@ -85,7 +75,7 @@ jobs:
       - name: Upload wheels
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4
         with:
-          name: {{ 'cibw-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.build }}' }}
+          name: {{ 'cibw-${{ matrix.build }}-${{ matrix.arch }}-${{ matrix.os }}' }}
           path: wheelhouse/*.whl
 
 
