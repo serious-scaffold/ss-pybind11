@@ -81,8 +81,11 @@ jobs:
     , consistency
 [%- endif -%]
     ]
-    uses: ./.github/workflows/wheels.yml
+    uses: ./.github/workflows/reuseable_cibuildwheel.yml
     secrets: inherit
+    with:
+      auto-archs: true
+      extral-archs: false
 [%- if use_codecov == true %]
 
 
