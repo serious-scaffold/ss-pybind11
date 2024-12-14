@@ -73,16 +73,18 @@ jobs:
           )
 
 
-  checks:
-    runs-on: ${{ matrix.runs-on }}
-    needs: [pre-commit]
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ['3.8', '3.12']
-        runs-on: [ubuntu-24.04, macos-14, windows-2022] # renovate: github-runner
+  wheels:
+    needs: [pre-commit, consistency]
+    uses: ./.github/workflows/reuseable_cibuildwheel.yml
+    secrets: inherit
+    with:
+      auto-archs: true
+      extral-archs: false
 
-    name: Check Python ${{ matrix.python-version }} on ${{ matrix.runs-on }}
+
+  codecov:
+    runs-on: ubuntu-24.04
+    needs: [pre-commit]
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -96,13 +98,12 @@ jobs:
             ~/vcpkg
             ~/.cache/pip
             ~/.cache/vcpkg
-            ~/AppData/Local/vcpkg
-          key: ${{ matrix.python-version }}-${{ matrix.runs-on }}-${{ hashFiles('vcpkg.json') }}
-          restore-keys: ${{ matrix.python-version }}-${{ matrix.runs-on }}-${{ hashFiles('vcpkg.json') }}
+          key: codecov-${{ hashFiles('vcpkg.json') }}
+          restore-keys: codecov-${{ hashFiles('vcpkg.json') }}
 
       - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.x
 
       - name: Install package
         run: python -m pip install .[test] -v
@@ -119,7 +120,6 @@ jobs:
   check-docs:
     runs-on: ubuntu-24.04
     needs: [pre-commit, consistency]
-    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -150,7 +150,6 @@ jobs:
   check-mkdocs-docs:
     runs-on: ubuntu-24.04
     needs: [pre-commit, consistency]
-    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -174,7 +173,7 @@ jobs:
   pass:
     if: always()
     needs:
-      - checks
+      - wheels
       - check-docs
       - check-mkdocs-docs
     runs-on: ubuntu-24.04
