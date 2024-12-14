@@ -2,7 +2,8 @@ name: CD
 
 on:
   workflow_dispatch:
-
+  schedule:
+    - cron: 0 0 * * 5
   release:
     types:
       - published
@@ -36,8 +37,8 @@ jobs:
     uses: ./.github/workflows/reuseable_cibuildwheel.yml
     secrets: inherit
     with:
-      auto-archs: true
-      extral-archs: true
+      auto: true
+      extra: true
 
 
   check_dist:
@@ -58,6 +59,7 @@ jobs:
     needs: [build_wheels, build_sdist, check_dist]
     environment:
       name: pypi
+      url: https://pypi.org/project/ss-pybind11
     permissions:
       id-token: write
     runs-on: ubuntu-latest
