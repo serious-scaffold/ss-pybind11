@@ -2,13 +2,14 @@ name: CD
 
 on:
   workflow_dispatch:
-
+  schedule:
+    - cron: 0 0 * * 5
   release:
     types:
       - published
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: {{ '${{ github.workflow }}-${{ github.ref }}' }}
   cancel-in-progress: true
 
 env:
@@ -36,8 +37,8 @@ jobs:
     uses: ./.github/workflows/reuseable_cibuildwheel.yml
     secrets: inherit
     with:
-      auto-archs: true
-      extral-archs: true
+      auto: true
+      extra: true
 
 
   check_dist:
@@ -58,6 +59,7 @@ jobs:
     needs: [build_wheels, build_sdist, check_dist]
     environment:
       name: pypi
+      url: https://pypi.org/project/{{ repo_name }}
     permissions:
       id-token: write
     runs-on: ubuntu-latest
@@ -72,6 +74,6 @@ jobs:
 
       - uses: pypa/gh-action-pypi-publish@release/v1
         env:
-          PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+          PYPI_API_TOKEN: {{ '${{ secrets.PYPI_API_TOKEN }}' }}
         with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          password: {{ '${{ secrets.PYPI_API_TOKEN }}' }}
