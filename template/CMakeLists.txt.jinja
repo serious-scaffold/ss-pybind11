@@ -38,11 +38,7 @@ include(ConfigureVersion)
 [%- if use_cpm == true %]
 include(ConfigureCPMDependencies)
 [%- endif %]
-<<<<<<< before updating
 [%- if use_conan == true %]
-=======
-[%- if ss_cmake_use_conan == true %]
->>>>>>> after updating
 include(ConfigureConanDependencies)
 [%- endif %]
 [%- if compiled == true %]

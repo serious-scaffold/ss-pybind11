@@ -1,7 +1,6 @@
 [%- from pathjoin("includes", "variable.jinja") import repo_url with context -%]
 {
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
-<<<<<<< before updating
   "name": "{{ repo_name }}",
   "description": "{{ project_description }}",
   "builtin-baseline": "20a72ce99b12dd0ebfea5d39f32681bd68b19d03",
@@ -11,14 +10,6 @@
     "pybind11",
 [%- endif %]
 [%- if use_conan == true %]
-=======
-  "name": "{{ ss_cmake_repo_name }}",
-  "description": "{{ ss_cmake_project_description }}",
-  "builtin-baseline": "96b5ced82828ecaf67e6010a892c98d3e96ed1c2",
-  "homepage": "https://{{ ss_cmake_repo_url }}",
-  "dependencies": [
-[%- if ss_cmake_use_conan == true %]
->>>>>>> after updating
     "cmake-conan",
 [%- endif %]
 [%- if ss_cmake_use_cpm == true %]
@@ -30,7 +21,6 @@
 [%- endif %]
   ],
   "overrides": [
-<<<<<<< before updating
 [%- if compiled == true %]
     {
       "name": "pybind11",
@@ -38,9 +28,6 @@
     },
 [%- endif %]
 [%- if use_conan == true %]
-=======
-[%- if ss_cmake_use_conan == true %]
->>>>>>> after updating
     {
       "name": "cmake-conan",
       "version": "0.18.1"
@@ -49,7 +36,7 @@
 [%- if ss_cmake_use_cpm == true %]
     {
       "name": "cmake-cpm",
-      "version": "0.38.6#2"
+      "version": "0.40.2#2"
     },
 [%- endif %]
     {
