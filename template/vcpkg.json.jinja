@@ -12,7 +12,7 @@
 [%- if use_conan == true %]
     "cmake-conan",
 [%- endif %]
-[%- if use_cpm == true %]
+[%- if ss_cmake_use_cpm == true %]
     "cmake-cpm",
 [%- endif %]
     "cmake-modules"
@@ -33,10 +33,10 @@
       "version": "0.18.1"
     },
 [%- endif %]
-[%- if use_cpm == true %]
+[%- if ss_cmake_use_cpm == true %]
     {
       "name": "cmake-cpm",
-      "version": "0.38.6#2"
+      "version": "0.40.2#2"
     },
 [%- endif %]
     {
@@ -57,10 +57,10 @@
         "baseline": "09ae1472980f5e2132654900bb48061444b1cea5",
         "repository": "https://github.com/msclock/cmake-registry",
         "packages": [
-[%- if use_conan == true %]
+[%- if ss_cmake_use_conan == true %]
           "cmake-conan",
 [%- endif %]
-[%- if use_cpm == true %]
+[%- if ss_cmake_use_cpm == true %]
           "cmake-cpm",
 [%- endif %]
           "cmake-modules",
