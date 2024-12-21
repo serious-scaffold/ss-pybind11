@@ -1,9 +1,16 @@
 {
-  "python.testing.pytestArgs": ["tests"],
+  "python.testing.pytestArgs": [
+    "tests",
+    "-ra",
+    "--showlocals",
+    "--strict-markers",
+    "--strict-config"
+  ],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
+  "cmake.configureOnEdit": false,
+  "cmake.options.statusBarVisibility": "icon",
   "cmake.useCMakePresets": "always",
-  "cmake.options.statusBarVisibility": "compact",
   "files.associations": {
     "iosfwd": "cpp",
     "type_traits": "cpp",
