@@ -211,7 +211,7 @@ isort.required-imports = ["from __future__ import annotations"]
 
 [tool.pylint]
 py-version = "{{ min_py }}"
-ignore-paths = [".*/_version.py"]
+ignore-paths = [".*/_version.py", ".*/*.pyi"]
 [%- if compiled == true %]
 extension-pkg-allow-list = ["{{ module_name }}._core"]
 [%- endif %]

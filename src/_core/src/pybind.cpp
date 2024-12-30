@@ -8,9 +8,9 @@ PYBIND11_MODULE(_core, m) {
       Pybind11 _core plugin
       -----------------------
       .. currentmodule:: _core
-  )pbdoc";
+    )pbdoc";
 
     m.def("version", []() { return _core::ProjectVersion(); }, R"pbdoc(
-      The _core plugin version.
-  )pbdoc");
+        The _core plugin version.
+    )pbdoc");
 }
