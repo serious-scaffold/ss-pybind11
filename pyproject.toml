@@ -158,7 +158,7 @@ isort.required-imports = ["from __future__ import annotations"]
 
 [tool.pylint]
 py-version = "3.8"
-ignore-paths = [".*/_version.py"]
+ignore-paths = [".*/_version.py", ".*/*.pyi"]
 extension-pkg-allow-list = ["ss_pybind11._core"]
 reports.output-format = "colorized"
 similarities.ignore-imports = "yes"
