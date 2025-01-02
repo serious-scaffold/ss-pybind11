@@ -20,7 +20,7 @@ target_include_interface_directories(
 
 target_link_libraries(${target_name} PRIVATE ${target_name_internal})
 
-install(TARGETS ${target_name} DESTINATION ${SKBUILD_PROJECT_NAME})
+install(TARGETS ${target_name} DESTINATION ${CMAKE_PROJECT_NAME})
 
 install_dependency(TARGETS ${target_name} DEPENDS_DESTINATION
-                   ${SKBUILD_PROJECT_NAME})
+                   ${CMAKE_PROJECT_NAME})
