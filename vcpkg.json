@@ -3,7 +3,7 @@
   "name": "ss-pybind11",
   "description": "A template of serious scaffold family based on pybind11.",
   "builtin-baseline": "4b6c50d962cc20aaa3ef457f8ba683b586263cfb",
-  "homepage": "https://github.com/serious-scaffold/ss-pybind11",
+  "homepage": "https:///serious-scaffold/ss-pybind11",
   "dependencies": [
     "pybind11",
     "cmake-modules",
@@ -16,7 +16,7 @@
     },
     {
       "name": "cmake-modules",
-      "version": "1.6.11"
+      "version": "1.6.13"
     },
     {
       "name": "robotology-cmake-ycm",
@@ -27,7 +27,7 @@
     "registries": [
       {
         "kind": "git",
-        "baseline": "e5e9b32228141212c78eace81718ca9894055b7b",
+        "baseline": "acce0190fabf75096d6be7db6138cb714bc7aace",
         "repository": "https://github.com/msclock/cmake-registry",
         "packages": [
           "cmake-modules",
