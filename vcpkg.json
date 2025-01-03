@@ -3,7 +3,7 @@
   "name": "ss-pybind11",
   "description": "A template of serious scaffold family based on pybind11.",
   "builtin-baseline": "4b6c50d962cc20aaa3ef457f8ba683b586263cfb",
-  "homepage": "https:///serious-scaffold/ss-pybind11",
+  "homepage": "https://github.com/serious-scaffold/ss-pybind11",
   "dependencies": [
     "pybind11",
     "cmake-modules",

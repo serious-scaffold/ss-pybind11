@@ -4,7 +4,7 @@ message(STATUS "CMAKE VERSION:${CMAKE_VERSION}")
 project(
   ss_pybind11
   LANGUAGES CXX C
-  HOMEPAGE_URL "https:///serious-scaffold/ss-pybind11"
+  HOMEPAGE_URL "https://github.com/serious-scaffold/ss-pybind11"
   DESCRIPTION "A template of serious scaffold family based on pybind11.")
 
 # Project default module
