@@ -14,8 +14,8 @@ on:
 
 jobs:
   build_wheels:
-    name: {{ '${{ matrix.os }}, ${{ matrix.arch }}, ${{ matrix.build }} wheels' }}
-    runs-on: {{ '${{ matrix.os }}' }}
+    name: ${{ matrix.os }}, ${{ matrix.arch }}, ${{ matrix.build }} wheels
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
@@ -42,20 +42,23 @@ jobs:
         if: runner.os == 'Windows' && inputs.auto && !contains(matrix.qemu_arch, matrix.arch)
         uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1
         with:
-          arch: {{ '${{ matrix.arch }}' }}
+          arch: ${{ matrix.arch }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3.6.0
         if: runner.os == 'Linux' && inputs.extra && contains(matrix.qemu_arch, matrix.arch)
 
       - name: Cache
+        if: >
+          inputs.auto && !contains(matrix.qemu_arch, matrix.arch) ||
+          inputs.extra && contains(matrix.qemu_arch, matrix.arch)
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
         with:
           path: |
             ~/.cache/vcpkg
             ~/AppData/Local/vcpkg
-          key: {{ 'cache-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.build }}-${{ hashFiles(\'vcpkg.json\') }}' }}
-          restore-keys: {{ 'cache-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.build }}-${{ hashFiles(\'vcpkg.json\') }}' }}
+          key: cache-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.build }}-${{ hashFiles('vcpkg.json') }}
+          restore-keys: cache-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.build }}-${{ hashFiles('vcpkg.json') }}
 
       - name: Build wheels
         if: >
@@ -63,13 +66,12 @@ jobs:
           inputs.extra && contains(matrix.qemu_arch, matrix.arch)
         uses: pypa/cibuildwheel@6cccd09a31908ffd175b012fb8bf4e1dbda3bc6c # v2.23.0
         env:
-          CIBW_ARCHS: {{ '${{ matrix.arch }}' }}
-          CIBW_BUILD: {{ '\'*${{ matrix.build }}*\'' }}
+          CIBW_ARCHS: ${{ matrix.arch }}
+          CIBW_BUILD: '*${{ matrix.build }}*'
           CIBW_BEFORE_ALL_LINUX: >
             mkdir -p ~/.cache || true &&
             mkdir -p /host/home/runner/.cache/vcpkg || true &&
-            ln -s /host/home/runner/.cache/vcpkg ~/.cache/vcpkg || true &&
-            git config --global --add safe.directory ~/.cache/vcpkg/projects/{{ repo_name }} || true
+            ln -s /host/home/runner/.cache/vcpkg ~/.cache/vcpkg || true
 
       - name: Upload wheels
         if: >
@@ -77,5 +79,5 @@ jobs:
           inputs.extra && contains(matrix.qemu_arch, matrix.arch)
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4
         with:
-          name: {{ 'cibw-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.arch }}' }}
+          name: cibw-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.arch }}
           path: wheelhouse/*.whl
