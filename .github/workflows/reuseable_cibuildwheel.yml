@@ -49,6 +49,9 @@ jobs:
         if: runner.os == 'Linux' && inputs.extra && contains(matrix.qemu_arch, matrix.arch)
 
       - name: Cache
+        if: >
+          inputs.auto && !contains(matrix.qemu_arch, matrix.arch) ||
+          inputs.extra && contains(matrix.qemu_arch, matrix.arch)
         uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
         with:
           path: |
@@ -68,8 +71,7 @@ jobs:
           CIBW_BEFORE_ALL_LINUX: >
             mkdir -p ~/.cache || true &&
             mkdir -p /host/home/runner/.cache/vcpkg || true &&
-            ln -s /host/home/runner/.cache/vcpkg ~/.cache/vcpkg || true &&
-            git config --global --add safe.directory ~/.cache/vcpkg/projects/ss-pybind11 || true
+            ln -s /host/home/runner/.cache/vcpkg ~/.cache/vcpkg || true
 
       - name: Upload wheels
         if: >
