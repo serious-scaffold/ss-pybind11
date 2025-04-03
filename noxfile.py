@@ -107,8 +107,6 @@ def template(session: nox.Session) -> None:
     """
     Build template from current repo. Pass "-- --help" to show helps.
     """
-    import os
-
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-r", "--vcs-ref", default="HEAD", help="Git reference to generate."
@@ -121,18 +119,16 @@ def template(session: nox.Session) -> None:
     parser.add_argument("--dest", default=".", help="Destination to generate.")
     args, posargs = parser.parse_known_args(session.posargs)
 
-    excludes = [".", ".git", "template", "includes", ".nox", "copier.yml"]
-    for dir_item in os.listdir("."):
-        if dir_item in excludes:
+    excludes = [".git", "template", "includes", ".nox", "copier.yml"]
+    for dir_item in Path().iterdir():
+        if str(dir_item) in excludes:
             continue
-        if Path(dir_item).is_dir():
+        if dir_item.is_dir():
             shutil.rmtree(dir_item)
         else:
-            Path(dir_item).unlink()
+            dir_item.unlink()
 
     session.run(
-        "pipx",
-        "run",
         "copier",
         "copy",
         "-r",
