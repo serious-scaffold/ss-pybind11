@@ -54,7 +54,7 @@ jobs:
           python-version: 3.x
 
       - name: Install copier
-        run: pipx install copier==9.5.0
+        run: pipx install copier==9.6.0
 
       - name: Verify template
         run: pipx run nox -s template
@@ -163,7 +163,7 @@ jobs:
           python-version: 3.x
 
       - name: Install copier
-        run: pipx install copier==9.5.0
+        run: pipx install copier==9.6.0
 
       - name: Apply mkdocs
         run: pipx run nox -s template -- -d docs_type=mkdocs
