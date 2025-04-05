@@ -105,10 +105,12 @@
       "datasourceTemplate": "pypi",
       "fileMatch": [
         "^\\.github/workflows/.+\\.yml$",
-        "^\\.renovaterc\\.json$"
+        "^\\.renovaterc\\.json$",
+        "^pyproject\\.toml$"
 [%- if repo_name == 'ss-pybind11' %],
         "^template/.*?/workflows/.+\\.yml(\\.jinja)?$",
-        "^template/\\.renovaterc\\.json\\.jinja$"
+        "^template/\\.renovaterc\\.json\\.jinja$",
+        "^template/pyproject\\.toml\\.jinja$"
 [%- endif %]
       ],
       "matchStrings": [
