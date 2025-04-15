@@ -31,7 +31,7 @@ jobs:
           - {os: macos-14, arch: arm64, build: macos}
 
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@v4
         if: >
           inputs.auto && !contains(matrix.qemu_arch, matrix.arch) ||
           inputs.extra && contains(matrix.qemu_arch, matrix.arch)
@@ -40,19 +40,19 @@ jobs:
 
       - name: Set up msvc on Windows
         if: runner.os == 'Windows' && inputs.auto && !contains(matrix.qemu_arch, matrix.arch)
-        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1
+        uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: ${{ matrix.arch }}
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3.6.0
+        uses: docker/setup-qemu-action@v3
         if: runner.os == 'Linux' && inputs.extra && contains(matrix.qemu_arch, matrix.arch)
 
       - name: Cache
         if: >
           inputs.auto && !contains(matrix.qemu_arch, matrix.arch) ||
           inputs.extra && contains(matrix.qemu_arch, matrix.arch)
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cache/vcpkg
@@ -64,7 +64,7 @@ jobs:
         if: >
           inputs.auto && !contains(matrix.qemu_arch, matrix.arch) ||
           inputs.extra && contains(matrix.qemu_arch, matrix.arch)
-        uses: pypa/cibuildwheel@d04cacbc9866d432033b1d09142936e6a0e2121a # v2.23.2
+        uses: pypa/cibuildwheel@v2.23.2
         env:
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_BUILD: '*${{ matrix.build }}*'
@@ -77,7 +77,7 @@ jobs:
         if: >
           inputs.auto && !contains(matrix.qemu_arch, matrix.arch) ||
           inputs.extra && contains(matrix.qemu_arch, matrix.arch)
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@v4
         with:
           name: cibw-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.arch }}
           path: wheelhouse/*.whl
