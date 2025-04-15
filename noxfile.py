@@ -119,7 +119,7 @@ def template(session: nox.Session) -> None:
     parser.add_argument("--dest", default=".", help="Destination to generate.")
     args, posargs = parser.parse_known_args(session.posargs)
 
-    excludes = [".git", "template", "includes", ".nox", "copier.yml"]
+    excludes = [".git", "template", "includes", ".nox", ".venv", "copier.yml"]
     for dir_item in Path().iterdir():
         if str(dir_item) in excludes:
             continue
