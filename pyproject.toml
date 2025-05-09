@@ -87,8 +87,9 @@ before-build = [
 ]
 
 [[tool.cibuildwheel.overrides]]
-select = "*linux_{aarch64,armv7l,ppc64le,s390x}"
+select = "*linux_{aarch64,armv7l,ppc64le,s390x,x86_64,i686}"
 environment = { VCPKG_FORCE_SYSTEM_BINARIES = "1" }
+inherit.environment = "append"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
