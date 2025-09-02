@@ -81,7 +81,7 @@ before-build = [
   'yum install zip perl-IPC-Cmd -y || apk add zip || true',
   'apt update && apt install zip pkg-config -y || true',
   'pip install cmake==3.31.6',
-  'pip install ninja==1.11.1.4',
+  'pip install ninja==1.13.0',
   'cmake --version',
   'ninja --version',
 ]
