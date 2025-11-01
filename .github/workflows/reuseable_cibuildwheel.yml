@@ -77,7 +77,7 @@ jobs:
         if: >
           inputs.auto && !contains(matrix.qemu_arch, matrix.arch) ||
           inputs.extra && contains(matrix.qemu_arch, matrix.arch)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: cibw-${{ matrix.os }}-${{ matrix.build }}-${{ matrix.arch }}
           path: wheelhouse/*.whl
